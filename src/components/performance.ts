@@ -3,20 +3,10 @@ import linearSuite from 'suites/linear.ts';
 import { Chart, registerables } from 'chart.js';
 import { meanRunTimes, runToRunLines } from 'charts/runToRunLines';
 import { ChartSelector } from 'components/chartSelector';
+import { runPerStage } from '../charts/stageRun.ts';
 
 Chart.register(...registerables);
 const test = linearSuite;
-const stages = [
-  'start',
-  'parsed',
-  'simplified',
-  'registered',
-  'replaced',
-  'checked',
-  'filled',
-  'compiled',
-  'written',
-];
 
 const chartKinds = {
   run2Run: 'Run to run time',
@@ -48,10 +38,10 @@ function addControls(parent: HTMLDivElement) {
         chart = new Chart(canvas, runToRunLines(test));
         break;
       case chartKinds.meanRun:
-        chart.destroy();
         chart = new Chart(canvas, meanRunTimes(test));
         break;
       case chartKinds.runPerStage:
+        chart = new Chart(canvas, runPerStage(test));
         break;
       default:
         throw new Error('Not implemented chart kind');
