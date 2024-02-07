@@ -1,6 +1,6 @@
 import { ChartConfiguration, ChartDataset } from 'chart.js';
-import { Benchmark, Run } from 'types';
-import { decryptName, utils } from '../utils.ts';
+import { Benchmark } from 'types';
+import { decryptName } from '../utils.ts';
 import { meanRunTimes } from './runToRunLines.ts';
 
 const stages = [
