@@ -1,10 +1,16 @@
-import { Performance } from './performance';
-import './style.css';
+import { performance } from './components/performance';
 
-// create a network
-const container = document.getElementById('other');
-Performance(container as HTMLCanvasElement);
 
+function bootstrap(rootElm: HTMLDivElement): void {
+  performance(rootElm);
+}
+
+const root = document.getElementById('app');
+if (root instanceof HTMLDivElement) {
+  bootstrap(root);
+} else {
+  window.alert('Root element not found')
+}
 
 
 
