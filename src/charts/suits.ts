@@ -1,4 +1,5 @@
 import { Benchmark } from 'types';
+import { utils } from '../utils.ts';
 
 interface Cache {
   [filename: string]: Benchmark;
@@ -26,7 +27,7 @@ export async function getBench(filePath: string): Promise<Benchmark | undefined>
 export async function getNestedSeries(): Promise<Benchmark[]> {
   const requests: Promise<Benchmark | undefined>[] = [];
 
-  for (let nodes = 1; nodes < 2; nodes++) {
+  for (let nodes = 1; nodes < 4; nodes++) {
     for (let levels = 1; levels < 6; levels++) {
       const file = `depth/c1-p0-n${nodes}-l${levels}-a0.hbt.json`;
       requests.push(getBench(file));
@@ -34,5 +35,7 @@ export async function getNestedSeries(): Promise<Benchmark[]> {
   }
 
   const results = await Promise.all(requests);
-  return results.filter((r): r is Benchmark => r !== undefined);
+  return results
+    .filter((r): r is Benchmark => r !== undefined)
+    .sort((a, b) => utils.calcElements(a.file) - utils.calcElements(b.file));
 }

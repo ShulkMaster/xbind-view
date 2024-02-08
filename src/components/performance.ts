@@ -62,6 +62,7 @@ function updateChart(parent: HTMLElement, kind: string): void {
     parent.appendChild(canvas);
   }
 
+  console.log('Updating chart', suits);
   chart?.destroy();
   switch (kind) {
     case chartKinds.run2Run:
