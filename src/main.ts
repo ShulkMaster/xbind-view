@@ -1,5 +1,5 @@
 import { performance } from './components/performance';
-
+import './main.css';
 
 function bootstrap(rootElm: HTMLDivElement): void {
   performance(rootElm);

@@ -26,8 +26,8 @@ export async function getBench(filePath: string): Promise<Benchmark | undefined>
 export async function getNestedSeries(): Promise<Benchmark[]> {
   const requests: Promise<Benchmark | undefined>[] = [];
 
-  for (let nodes = 1; nodes <= 2; nodes++) {
-    for (let levels = 1; levels <= 6; levels++) {
+  for (let nodes = 1; nodes < 2; nodes++) {
+    for (let levels = 1; levels < 6; levels++) {
       const file = `depth/c1-p0-n${nodes}-l${levels}-a0.hbt.json`;
       requests.push(getBench(file));
     }

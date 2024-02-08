@@ -33,6 +33,7 @@ export class ChartSelector {
   }
 
   public setOnSelect(callback: (chart: string) => void): void {
+    callback(this.root.value);
     this.root.onchange = () => {
       callback(this.root.value);
     };
