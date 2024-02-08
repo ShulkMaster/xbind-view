@@ -24,14 +24,12 @@ export async function getBench(filePath: string): Promise<Benchmark | undefined>
   }
 }
 
-export async function getNestedSeries(): Promise<Benchmark[]> {
+export async function getNestedSeries(order: number): Promise<Benchmark[]> {
   const requests: Promise<Benchmark | undefined>[] = [];
 
-  for (let nodes = 1; nodes < 4; nodes++) {
-    for (let levels = 1; levels < 6; levels++) {
-      const file = `depth/c1-p0-n${nodes}-l${levels}-a0.hbt.json`;
-      requests.push(getBench(file));
-    }
+  for (let levels = 1; levels < 6; levels++) {
+    const file = `depth/c1-p0-n${order}-l${levels}-a0.hbt.json`;
+    requests.push(getBench(file));
   }
 
   const results = await Promise.all(requests);
