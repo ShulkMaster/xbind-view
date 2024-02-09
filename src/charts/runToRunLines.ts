@@ -11,8 +11,9 @@ const runLabels = Array.from(
 
 export function runToRunLines(suite: Benchmark[]): ChartConfiguration<'line'> {
   const data = suite.map((b) => {
+    const config = utils.getNLNames(b.file);
     return {
-      label: utils.decryptName(b.file),
+      label: `${utils.decryptName(b.file)}(${config})`,
       data: b.runs.map(bench.getRuntime),
       borderWidth: 1,
     };
@@ -93,14 +94,11 @@ export function meanRunTimes(suite: Benchmark[]): ChartConfiguration<'line'> {
 
   dataset.data = averages;
 
-  const values = suite.map((b) => utils.calcElements(b.file));
-  const order3 = linearSet(values, 3);
-
   return {
     type: 'line',
     data: {
       labels,
-      datasets: [dataset, order3],
+      datasets: [dataset],
     },
     options: seconds(),
   };

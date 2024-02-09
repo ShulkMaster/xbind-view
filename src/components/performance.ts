@@ -22,7 +22,7 @@ let chart: Chart;
 export function performance(parent: HTMLDivElement): void {
   const loader = new Loading();
   loader.attachLoading(parent);
-  getNestedSeries('low')
+  getNestedSeries('mid')
     .then((s) => { suits = s; })
     .then(() => initChart(loader));
 }

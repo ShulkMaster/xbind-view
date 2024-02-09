@@ -16,7 +16,7 @@ function numberOfAttributes(attributesPerNode: number, nodes: number) {
   return attributesPerNode * nodes;
 }
 
-function decryptParams(cryptName: string): TestParams {
+function getParamsList(cryptName: string): number[] {
   const [c, p, n, l, aExt] = cryptName.split('-');
   const comps = Number(c.substring(1));
   const props = Number(p.substring(1));
@@ -24,6 +24,12 @@ function decryptParams(cryptName: string): TestParams {
   const levels = Number(l.substring(1));
   const a = aExt.split('.')[0];
   const attrs = Number(a.substring(1));
+
+  return [comps, props, nods, levels, attrs];
+}
+
+function decryptParams(cryptName: string): TestParams {
+  const [comps, props, nods, levels, attrs] = getParamsList(cryptName);
 
   const properties = Math.pow(props, 2);
   const templateNodes = numberOfTemplateNodes(nods, levels);
@@ -39,8 +45,8 @@ function decryptParams(cryptName: string): TestParams {
 }
 
 function getNLNames(name: string): string {
- const params = decryptParams(name);
-  return `n${params.tags}-l${params.levels}`;
+ const params = getParamsList(name);
+  return `n${params[2]}-l${params[3]}`;
 }
 
 function calcElements(name: string): number {
@@ -53,7 +59,7 @@ function calcElements(name: string): number {
 
 export function decryptName(name: string): string {
   const elements = calcElements(name);
-  return `${elements} Elements`;
+  return `${elements}E`;
 }
 
 function nanosToMillis(nanos: string): number {
