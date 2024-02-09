@@ -33,7 +33,7 @@ jobs:
         with:
            path: dist
            retention-days: 1
-          
-      - name: Deploy GitHub Pages site
+
+      - name: Deploy 🚀
         uses: actions/deploy-pages@v4.0.4
-          
+
