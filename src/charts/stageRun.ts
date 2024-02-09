@@ -77,6 +77,7 @@ export function runPerStage(suits: Benchmark[]): ChartConfiguration<'bar'> {
   };
 }
 
+///@ts-ignore
 function findMinMaxMemory(run: Run): [MemoryUsage, MemoryUsage] {
   let min = run.memory[0].allocated;
   let max = run.memory[0].allocated;

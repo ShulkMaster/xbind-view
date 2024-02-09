@@ -66,6 +66,7 @@ function linearSetInterpotlation(data: number[], order: number): number[] {
   }
 }
 
+///@ts-ignore
 function linearSet(x: number[], order: number): ChartDataset<'line'> {
   return {
     label: `${order} Order Polinomial`,
