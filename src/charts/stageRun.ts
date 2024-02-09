@@ -138,7 +138,7 @@ export function memoryUsage(suits: Benchmark[]): ChartConfiguration<'bar'> {
 }
 
 function getMemoryDelta(suit: Benchmark): ChartDataset<'line'> {
-  const deltas: number[] = Array(stages.length).fill(50);
+  const deltas: number[] = Array(stages.length).fill(0);
   const kilo = 1024;
 
   for (let stgIndex = 0; stgIndex < stages.length; stgIndex++) {

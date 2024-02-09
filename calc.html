@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Entradas</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: rgb(137, 136, 136);
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            min-width: 250px;
+        }
+
+        label {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        input {
+            width: 90%;
+            padding: 8px;
+            margin: 5px auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+<form id="myForm" onchange="recalculate()">
+    <h2>Node calculator</h2>
+    <label for="components">Componentes:</label>
+    <input type="number" id="components" name="components" min="0" max="100" required><br>
+
+    <label for="properties">Propiedades:</label>
+    <input type="number" id="properties" name="properties" min="0" max="100" required><br>
+
+    <label for="nodes">Nodos:</label>
+    <input type="number" id="nodes" name="nodes" min="0" max="100" required><br>
+
+    <label for="levels">Niveles:</label>
+    <input type="number" id="levels" name="levels" min="0" max="100" required><br>
+
+    <label for="attributes">Atributos:</label>
+    <input type="number" id="attributes" name="attributes" min="0" max="100" required><br>
+
+    <div id="valueDisplay"></div>
+</form>
+
+<script>
+  const components = document.getElementById("components");
+  const properties = document.getElementById("properties");
+  const nodes = document.getElementById("nodes");
+  const levels = document.getElementById("levels");
+  const attributes = document.getElementById("attributes");
+  const div = document.getElementById("valueDisplay");
+
+  function numberOfTemplateNodes(nodesPerLevel, levels) {
+    if (levels === 0) return nodesPerLevel;
+    if (levels === 1) return nodesPerLevel * levels + 1;
+
+    // geometric series
+    const numerator = 1 - Math.pow(nodesPerLevel, levels);
+    const denominator = 1 - nodesPerLevel;
+    return (nodesPerLevel * numerator) / denominator;
+  }
+
+  function numberOfAttributes(attributesPerNode, nodes) {
+    return attributesPerNode * nodes;
+  }
+
+  function numberOfNodes(data) {
+    console.log(data);
+    const comps = data.components;
+    const properties = data.components * Math.pow(data.properties, 2);
+    const templateNodes = numberOfTemplateNodes(data.nodes, data.levels);
+    const attributes = numberOfAttributes(data.attributes, templateNodes);
+
+    return {
+      components: data.components,
+      properties: comps * properties,
+      tags: comps * templateNodes,
+      attributes: comps * attributes,
+      totalNodes: comps * (properties + templateNodes + attributes),
+    };
+  }
+
+  function recalculate() {
+    const recalculated = numberOfNodes({
+      components: Number(components.value),
+      properties: Number(properties.value),
+      nodes: Number(nodes.value),
+      levels: Number(levels.value),
+      attributes: Number(attributes.value),
+    });
+
+    while (div.firstChild) {
+      div.removeChild(div.firstChild);
+    }
+
+    for (const [key, value] of Object.entries(recalculated)) {
+      div.appendChild(document.createElement('p'))
+        .appendChild(document.createTextNode(`${key}: ${value}`));
+    }
+  }
+</script>
+</body>
+</html>

@@ -32,3 +32,5 @@ export type TestParams = {
   levels: number;
   attributes: number;
 };
+
+export type Orders = 'mid' | 'low' | 'high';

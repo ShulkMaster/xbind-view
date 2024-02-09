@@ -8,6 +8,7 @@ import { Benchmark } from 'types';
 
 Chart.register(...registerables);
 let suits: Benchmark[] = [];
+
 const chartKinds = {
   run2Run: 'Run to run time',
   meanRun: 'Mean run time',
@@ -21,7 +22,7 @@ let chart: Chart;
 export function performance(parent: HTMLDivElement): void {
   const loader = new Loading();
   loader.attachLoading(parent);
-  getNestedSeries()
+  getNestedSeries('low')
     .then((s) => { suits = s; })
     .then(() => initChart(loader));
 }
@@ -62,7 +63,6 @@ function updateChart(parent: HTMLElement, kind: string): void {
     parent.appendChild(canvas);
   }
 
-  console.log('Updating chart', suits);
   chart?.destroy();
   switch (kind) {
     case chartKinds.run2Run:
